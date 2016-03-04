@@ -10,22 +10,66 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" Plugins
+" NerdTree
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
+map <C-n> :tabnew<CR>
+map <C-j> :tabp<CR>
+map <C-l>  :tabn<CR>
+
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+
+" YouCompleteMe
 " Plugin 'Valloric/YouCompleteMe'
+
+" Surround
 Plugin 'surround.vim'
 
-" language support
-Plugin 'bash-support.vim'
-
-" git
+" Git
 Plugin 'tpope/vim-fugitive'
 
 " Color Schemes
 Plugin 'flazz/vim-colorschemes'
+
+" Indent Guides
 Plugin 'nathanaelkane/vim-indent-guides'
+
+" CtrlP
+Plugin 'ctrlpvim/ctrlp.vim'
+
+" UltiSnips
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+"
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
+
+" Trigger configuration. Do not use <tab> if you use
+" https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+" Syntastic
+Plugin 'scrooloose/syntastic'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -44,9 +88,6 @@ filetype plugin indent on    " required
 "
 syntax on
 colorscheme badwolf
-set ts=4 sw=4 et
-let g:indent_guides_start_level=2
-let g:indent_guides_guide_size=1
 
 set list
 set listchars=eol:⏎,tab:␉·,trail:␠,nbsp:⎵
@@ -64,6 +105,7 @@ set cindent
 set nobackup
 set clipboard+=unnamed
 set expandtab
+set backspace=indent,eol,start
 
 " show zennkaku space
 function! ZenkakuSpace()
@@ -79,7 +121,3 @@ if has('syntax')
     call ZenkakuSpace()
 endif
 
-" NERDTree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-nnoremap <silent><C-e> :NERDTreeToggle<CR>
